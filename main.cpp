@@ -2,26 +2,34 @@
 
 #include <Cacao.hpp>
 #include <iostream>
+#include <numeric>
 #include "ConnectorNode.h"
-#include "SpacingGui.h"
+#include "SpacingController.h"
 
 using namespace cocos2d;
 ModContainer* m;
 
-std::string createMoveTrigger(CCPoint realpos, CCPoint targetpos, int group) {
+typedef struct _pog {
+    float rotate;
+    float index;
+    CCPoint move;
+} KeyframeInfo;
+
+std::string createMoveTrigger(CCPoint realpos, CCPoint targetpos, int group, float distance) {
     char out[128];
-    sprintf(out, "1,901,2,%f,3,%f,36,1,28,%f,29,%f,51,%d,10,0.1", realpos.x, realpos.y-90, targetpos.x, targetpos.y, group);
+    sprintf(out, "1,901,2,%f,3,%f,36,1,28,%f,29,%f,51,%d,10,%f", realpos.x, realpos.y-90, targetpos.x, targetpos.y, group, distance);
+    //std::cout << "our thing " << out << std::endl;
+    return std::string(out);
+}
+
+std::string createRotateTrigger(CCPoint realpos, float targetrot, int group, float distance) {
+    char out[128];
+    sprintf(out, "1,1346,2,%f,3,%f,36,1,68,%f,51,%d,10,%f", realpos.x, realpos.y-90, targetrot, group, distance);
     std::cout << "our thing " << out << std::endl;
     return std::string(out);
 }
 
-std::string createRotateTrigger(CCPoint realpos, float targetrot, int group) {
-    char out[128];
-    sprintf(out, "1,1346,2,%f,3,%f,36,1,68,%f,51,%d,10,0.1", realpos.x, realpos.y-90, targetrot, group);
-    std::cout << "our thing " << out << std::endl;
-    return std::string(out);
-}
-
+std::vector<SpacingController*> g_spacingList;
 class PhantomEditorUI : public EditorUI {
 public:
 
@@ -66,39 +74,97 @@ public:
         }
     }
 
+    std::vector<KeyframeInfo> subdivideIfNeeded(std::vector<KeyframeInfo> frames, SpacingController* sController, int fsize) {
+        std::vector<KeyframeInfo> new_frames;
+        new_frames.push_back(frames[0]);
+        bool is_dirty = false;
+        for (int index=1; index<frames.size();index++) {
+            auto kinfo = frames[index];
+            auto bezMult_1 = sController->bezierMultiplierAtRange(kinfo.index, fsize);
 
-    std::string recurseChain(GameObject* src, int idx) {
+            float bez2_index = index<(frames.size()-1) ? frames[index+1].index : kinfo.index+1;
+            auto bezMult_2 = sController->bezierMultiplierAtRange(bez2_index, fsize);
+
+            //std::cout << "frame with index " << index << "\n";
+            if (fabs(bezMult_2 - bezMult_1) > 1) {
+                std::cout << "stuff is " << bezMult_2 - bezMult_1 << "\n";
+                std::cout << "index is " << kinfo.index << " - " << bez2_index << "\n"; 
+                KeyframeInfo k1 = {.move = ccp(kinfo.move.x/2, kinfo.move.y/2), .rotate = kinfo.rotate/2, .index = kinfo.index};
+                KeyframeInfo k2 = {.move = ccp(kinfo.move.x/2, kinfo.move.y/2), .rotate = kinfo.rotate/2, .index = (kinfo.index + bez2_index)/2};
+                new_frames.push_back(k1);
+                new_frames.push_back(k2);
+                is_dirty = true;
+            } else {
+                new_frames.push_back(kinfo);
+            }
+        }
+        if (is_dirty)
+            return subdivideIfNeeded(new_frames, sController, fsize);
+        return new_frames;
+    }
+
+    std::string collapseFrames(GameObject* src) {
         std::string toPaste;
 
+        std::vector<KeyframeInfo> frames;
+        frames.push_back({.move=ccp(0,0),.rotate=0,.index=0});
         auto connection = ConnectorNode::findFromSource(src);
-        if (connection) {
+        GameObject* original;
+        int index = 1;
+        while (connection) {
             auto kframe = connection->getDestinationObject();
             if (!_editorLayer()->_objects()->containsObject(kframe)) {
                 connection->destroy();
-                return toPaste;
+                break;
             }
+            original = reinterpret_cast<GameObject*>(kframe->getFollowingSprite());
 
-            auto original = reinterpret_cast<GameObject*>(kframe->getFollowingSprite());
             auto metadata = reinterpret_cast<CCNode*>(kframe->getUserObject());
-            if (!metadata)
-                return toPaste;
 
-            connection->destroy();
             _editorLayer()->removeObject(kframe, true);
+            if (!metadata)
+                break;
 
-            CCPoint amountToMove = kframe->getPosition() - metadata->getPosition();
-            float amountToRotate = kframe->getRotation() - metadata->getRotation();
+            KeyframeInfo info;
+            info.move = kframe->getPosition() - metadata->getPosition();
+            info.rotate = kframe->getRotation() - metadata->getRotation();
+            info.index = index;
+
+            if (info.move.x!=0 || info.move.y!=0 || info.rotate!=0)
+                frames.push_back(info);
+            connection->destroy();
+            connection = ConnectorNode::findFromSource(kframe);
+            index++;
+        }
+        auto sController = SpacingController::fromList(g_spacingList, src);
+        std::vector<KeyframeInfo> new_frames = subdivideIfNeeded(frames, sController, frames.size());
+
+        float duration = sController->duration();
+        new_frames.push_back({.move=ccp(0,0),.rotate=0,.index=static_cast<float>(frames.size())});
+        for (int counter=1; counter<new_frames.size()-1;counter++) {
+            auto kinfo = new_frames[counter];
 
             int newGroup = Cacao::uniqueGroupToObject(original, _editorLayer());
 
-            if (amountToMove.x!=0 || amountToMove.y!=0)
-                toPaste = toPaste + createMoveTrigger(original->getPosition()+ccp((idx+1) * 30.0f,0), amountToMove, newGroup) + ";";
-            if (amountToRotate !=0)
-                toPaste = toPaste + createRotateTrigger(original->getPosition()+ccp((idx+1) * 30.0f,30), amountToRotate, newGroup) + ";";
+            auto bezierSpacing = sController->bezierMultiplierAtRange(kinfo.index, frames.size()) * duration;
 
-            toPaste += recurseChain(kframe, idx+1);
+            float bez2_index = new_frames[counter+1].index;
+            auto nextBezierSpacing = sController->bezierMultiplierAtRange(bez2_index, frames.size()) * duration;
+
+            float currPosition = (new_frames[counter-1].index) * ( (300.0f * bezierSpacing) / (frames.size() - 1));
+            float nextPosition = (kinfo.index) * ( (300.0f * nextBezierSpacing) / (frames.size() - 1));
+            std::cout << "Bezier with index " << kinfo.index <<": " << bezierSpacing << "\n";
+            std::cout << "Bezier with index " << bez2_index << ": " << nextBezierSpacing << "\n";
+            if (kinfo.move.x!=0 || kinfo.move.y!=0) {
+                toPaste = toPaste + createMoveTrigger(original->getPosition()+ccp(currPosition, 0), kinfo.move, newGroup, (nextPosition - currPosition) / 300.0f) + ";";
+            }
+            if (kinfo.rotate !=0) {
+                toPaste = toPaste + createRotateTrigger(original->getPosition()+ccp(currPosition, 30), kinfo.rotate, newGroup, (nextPosition - currPosition) / 300.0f) + ";";
+            }
+
         }
         return toPaste;
+
     }
     void onClick(CCObject* sender) {
         std::string toPaste;
@@ -106,20 +172,30 @@ public:
         for (int i = 0; i < this->getSelectedObjects()->count(); i++) {
             GameObject* src = reinterpret_cast<GameObject*>(this->getSelectedObjects()->objectAtIndex(i));
             if (src->_zOrder() != 314159 && ConnectorNode::findFromSource(src)) {
-                toPaste += this->recurseChain(src, 0);
+                toPaste += this->collapseFrames(src);
             }
         }
-        ORIG(h_deselectAll, 0x1f300)(this);
+        this->deselectAll();
         this->pasteObjects(toPaste);
     }
 
     void onSpacing(CCObject* sender) {
-        SpacingLayer::create()->show();
+        std::vector<GameObject*> valid;
+        for (int i = 0; i < this->getSelectedObjects()->count(); i++) {
+            GameObject* src = reinterpret_cast<GameObject*>(this->getSelectedObjects()->objectAtIndex(i));
+            if (src->_zOrder() != 314159 && ConnectorNode::findFromSource(src))
+                valid.push_back(src);
+        }
+        if (valid.size()==1) {
+            auto ctrl = SpacingController::fromList(g_spacingList, valid[0]);
+            addChild(ctrl);
+            ctrl->show();
+        }
     }
 
     static void h_init(PhantomEditorUI* self) {
         ORIG(h_init, 0xcb50)(self);
-        //d_key01_001.png
+        g_spacingList.clear();
 
         auto menu = CCMenu::create();
         self->addChild(menu);
@@ -184,22 +260,10 @@ public:
 
         menu3->setPosition(ccp(rgt, top) + ccp(38 * -3, 35 * -2));
     }
-
-    static void h_deselectAll(PhantomEditorUI* self) {
-
-        for (int i = 0; i < self->_editorLayer()->_objects()->count(); i++) {
-            GameObject* gob = reinterpret_cast<GameObject*>(self->_editorLayer()->_objects()->objectAtIndex(i));
-            if (gob->_zOrder() == 314159) {
-                //self->_editorLayer()->removeObject(gob, false);
-            }
-        }
-        ORIG(h_deselectAll, 0x1f300)(self);
-    }
 };
 
 void inject() {
     m = new ModContainer("Keyframes");
     m->registerHook(getBase()+0xcb50, PhantomEditorUI::h_init);
-    m->registerHook(getBase()+0x1f300, PhantomEditorUI::h_deselectAll);
     m->enable();
 }

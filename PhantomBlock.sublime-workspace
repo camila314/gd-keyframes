@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"m_bezier",
+				"m_bezierDrawer"
+			],
+			[
+				"k",
+				"kControlPointRadius"
+			],
+			[
+				"m_current",
+				"m_currentTouch"
+			],
+			[
+				"m_curre",
+				"m_currentTouch"
+			],
+			[
+				"m_duration",
+				"m_durationSlider"
+			],
+			[
 				"CC",
 				"CCNode"
 			],
@@ -83,6 +103,59 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "SpacingGui.h",
+			"settings":
+			{
+				"buffer_size": 2478,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Cacao/include/cocos2dx/support/CCPointExtension.h",
+			"settings":
+			{
+				"buffer_size": 8689,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Cacao/include/Cacao.hpp",
+			"settings":
+			{
+				"buffer_size": 8374,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/jakrillis/vta.py",
+			"settings":
+			{
+				"buffer_size": 318,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Embedded software engineer\n\tEducation:  Bachelor's in CS or related field\n\tSkills:\n\t\tCommunication skills\n\t\tOrganization skills\n\t\tC Programming\n\t\tSoftware dev for IoT devices\n\tPreferred Experience:\n\t\t2 years of C\n\t\tlinux experience\n\t\t2 years of IoT experience\n\n\tBest for: people who like boring office jobs and already have experience with IT jobs\n\n\nAutomation programmer:\n\t\n\n\n\n",
+			"settings":
+			{
+				"buffer_size": 378,
+				"line_ending": "Unix",
+				"name": "Embedded software engineer"
+			}
+		},
+		{
+			"contents": "Writing is hard. A lot harder than I had thought. People make it seem a lot easier than it is, just \"let the words come directly from the heart\" or some stupid shit like that. Unfortunately, that's actually not how it works, and I certaintely learned that lesson earlier today. If it's possible to give yourself secondhand embarassment, that's exactly what i did. I had spent about 30 minutes just trying to find the perfect opening for a story that I didn't even have a full plot to.\n\nIt's been about 6 weeks and I still cannot find a hobby that I'm good enough at to make money. ",
+			"settings":
+			{
+				"buffer_size": 581,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "Packages/User/python3.sublime-build",
 	"build_system_choices":
@@ -111,6 +184,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"c++",
+				"Set Syntax: C++"
+			],
 			[
 				"x86",
 				"Set Syntax: Assembly x86 (NASM)"
@@ -336,21 +413,53 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/jakrillis/projects/gdmods/phantom",
-		"/Users/jakrillis/projects/gdmods/phantom/Cacao",
-		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include"
+		"/Users/jakrillis/projects/gdmods/phantom"
 	],
 	"file_history":
 	[
+		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/touch_dispatcher/CCTouch.h",
+		"/Users/jakrillis/projects/gdmods/phantom/Makefile",
+		"/Users/jakrillis/projects/gdmods/phantom/main.cpp",
+		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/draw_nodes/CCDrawingPrimitives.h",
+		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/draw_nodes/CCDrawNode.h",
+		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/include/ccTypes.h",
+		"/Users/jakrillis/projects/gdmods/phantom/_tmp.cxx",
+		"/Users/jakrillis/projects/gdmods/phantom/ControlPoint.cpp",
+		"/Users/jakrillis/projects/gdmods/phantom/BezierEditor.cpp",
+		"/Users/jakrillis/projects/gdmods/phantom/BezierCanvas.cpp",
+		"/Users/jakrillis/projects/gdmods/phantom/DurationTextDelegate.cpp",
+		"/Users/jakrillis/projects/gdmods/phantom/SpacingLayer.cpp",
+		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/cocoa/CCGeometry.h",
+		"/Users/jakrillis/projects/gdmods/phantom/GrossBezierStuff.cpp",
+		"/Users/jakrillis/projects/gdmods/gdstdlib/cocos.asm",
+		"/Users/jakrillis/projects/gdmods/phantom/GrossBezierStuff.h",
+		"/Users/jakrillis/PARADIGM",
+		"/Users/jakrillis/t.py",
+		"/Users/jakrillis/projects/gdmods/phantom/main.s",
+		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/support/CCPointExtension.h",
+		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/touch_dispatcher/CCTouchDelegateProtocol.h",
+		"/Users/jakrillis/projects/gdmods/phantom/makefile",
+		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/layers_scenes_transitions_nodes/CCLayer.h",
+		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-23-002500_camden314.crash",
+		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cc_defs.hpp",
+		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-23-001005_camden314.crash",
+		"/Users/jakrillis/t.c",
+		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-23-123447_camden314.crash",
+		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-23-124210_camden314.crash",
+		"/Users/jakrillis/projects/gdmods/gdstdlib/research.txt",
+		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/cocoa/CCArray.h",
+		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/support/data_support/ccCArray.h",
+		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-23-132041_camden314.crash",
+		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-23-132820_camden314.crash",
+		"/Users/jakrillis/projects/gdmods/lvl2shit/remove.py",
+		"/Users/jakrillis/projects/gdmods/lvl2shit/level/__init__.py",
+		"/Users/jakrillis/projects/customObject/speed.cpp",
+		"/Users/jakrillis/projects/gdmods/refresh/main.cpp",
 		"/Users/jakrillis/GeometryDash/cracked_backup/GDCracked/Contents/Resources/GJ_GameSheet03-uhd.plist",
 		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cc_macros.hpp",
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-21-024502_camden314.crash",
-		"/Users/jakrillis/projects/gdmods/gdstdlib/cocos.asm",
-		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cc_defs.hpp",
-		"/Users/jakrillis/projects/gdmods/phantom/main.cpp",
 		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/Cacao.hpp",
 		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/Cacao.cpp",
-		"/Users/jakrillis/projects/gdmods/phantom/Makefile",
 		"/Users/jakrillis/projects/gdmods/phantom/SpacingGui.h",
 		"/Users/jakrillis/.bash_profile",
 		"/Users/jakrillis/t.cpp",
@@ -358,7 +467,6 @@
 		"/Users/jakrillis/tmp/ccprog/main.cpp",
 		"/Users/jakrillis/projects/gdmods/gdstdlib/asminclude.asm",
 		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/custom/Sprites/CCMenuItemSpriteExtra/CCMenuItemSpriteExtra.h",
-		"/Users/jakrillis/projects/gdmods/gdstdlib/research.txt",
 		"/Users/jakrillis/school/activity7.py",
 		"/Users/jakrillis/projects/gdmods/phantom/ConnectorNode.h",
 		"/Users/jakrillis/projects/gdmods/phantom/ConnectorNode.cpp",
@@ -366,7 +474,6 @@
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-15-131428_camden314.crash",
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-15-131058_camden314.crash",
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-15-125220_camden314.crash",
-		"/Users/jakrillis/t.c",
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/osXditor_2021-04-13-223316_camden314.crash",
 		"/Users/jakrillis/projects/gdmods/selgroup/main.cpp",
 		"/Users/jakrillis/school/criticalthink5.py",
@@ -381,9 +488,7 @@
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-11-233624_camden314.crash",
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-11-233429_camden314.crash",
 		"/Users/jakrillis/projects/gdmods/phantom/PhantomBlock.sublime-project",
-		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/cocoa/CCArray.h",
 		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/cocoa/CCObject.h",
-		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/include/ccTypes.h",
 		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/base_nodes/CCNode.h",
 		"/Users/jakrillis/Downloads/sec4.7_Odyssey_study_guide_BB.pdf",
 		"/Users/jakrillis/projects/ios/hook/makefile",
@@ -439,37 +544,7 @@
 		"/Users/jakrillis/projects/gdml/makefile",
 		"/Users/jakrillis/projects/multithread/Makefile",
 		"/Users/jakrillis/projects/opt/opt.cpp",
-		"/Users/jakrillis/projects/opt/makefile",
-		"/Users/jakrillis/projects/opt/main.cpp",
-		"/Users/jakrillis/projects/opt/opy.cpp",
-		"/usr/local/bin/minecraft",
-		"/Users/jakrillis/projects/gdmods/scalehack/aboutfuckingtime.cpp",
-		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-05-151008_camden314.crash",
-		"/Users/jakrillis/projects/builds/spookydash/spookydash/helpers.h",
-		"/Users/jakrillis/projects/builds/gd.h/text_input_nodes/CCTextInputNode.h",
-		"/Users/jakrillis/projects/opt/why.cpp",
-		"/Users/jakrillis/Downloads/server.properties",
-		"/Users/jakrillis/projects/customObject/speed.cpp",
-		"/Users/jakrillis/Downloads/eula.txt",
-		"/Users/jakrillis/Downloads/xorstr.cpp",
-		"/Users/jakrillis/tmp/example.c",
-		"/Users/jakrillis/tmp/xorstr.cpp",
-		"/Users/jakrillis/tmp/example.pyx",
-		"/Users/jakrillis/tmp/helper.c",
-		"/Users/jakrillis/tmp/setup.pyx",
-		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-04-162856_camden314.crash",
-		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-04-154955_camden314.crash",
-		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-04-160041_camden314.crash",
-		"/usr/local/bin/rungd",
-		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-04-032212_camden314.crash",
-		"/Users/jakrillis/__pycache__/t.pyc",
-		"/Users/jakrillis/__pycache__/test.py",
-		"/Users/jakrillis/Library/Application Support/Sublime Text 3/Packages/User/MyCython.sublime-syntax",
-		"/Users/jakrillis/t.py",
-		"/Users/jakrillis/projects/blockflow/cystuff/GDArray.pyx",
-		"/Users/jakrillis/projects/blockflow/Blockflow.sublime-project",
-		"/Users/jakrillis/projects/blockflow/cystuff/PyLvl.pyx",
-		"/Users/jakrillis/projects/ios/hook/main.mm"
+		"/Users/jakrillis/projects/opt/makefile"
 	],
 	"find":
 	{
@@ -487,6 +562,19 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"updateDraw",
+			"textChanged",
+			"clamp_to_bezier_space",
+			"kControlPointRadius",
+			"getTouchPos",
+			"getLength",
+			"addedPosition",
+			"equal",
+			"comp",
+			"registerWith",
+			"ccDrawCubicBezier",
+			"0x178",
+			"m_touchT",
 			"TextInputDelegate",
 			"CCMenuitem",
 			"4017",
@@ -535,6 +623,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"kControlPointDiameter",
 			"",
 			";\\n",
 			"virtual void ",
@@ -550,8 +639,186 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "SpacingGui.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2478,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1691,
+								1691
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 636.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Cacao/include/cocos2dx/support/CCPointExtension.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8689,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4955,
+								4955
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3338.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Cacao/include/Cacao.hpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8374,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2902,
+								2915
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/HopperPseudo.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 771.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Users/jakrillis/vta.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 318,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								318,
+								318
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 378,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								207,
+								207
+							],
+							[
+								222,
+								222
+							]
+						],
+						"settings":
+						{
+							"auto_name": "Embedded software engineer",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 581,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								581,
+								581
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -616,12 +883,52 @@
 		"selected_items":
 		[
 			[
-				"CCMenuItemSprite",
-				"Cacao/include/cocos2dx/custom/Sprites/CCMenuItemSpriteExtra/CCMenuItemSpriteExtra.h"
+				"CCDrawNode",
+				"Cacao/include/cocos2dx/draw_nodes/CCDrawNode.h"
+			],
+			[
+				"CCDraw",
+				"Cacao/include/cocos2dx/draw_nodes/CCDrawingPrimitives.h"
+			],
+			[
+				"CCTouch",
+				"Cacao/include/cocos2dx/touch_dispatcher/CCTouch.h"
+			],
+			[
+				"CCPoint",
+				"Cacao/include/cocos2dx/support/CCPointExtension.h"
+			],
+			[
+				"CCGeometry",
+				"Cacao/include/cocos2dx/cocoa/CCGeometry.h"
+			],
+			[
+				"CCGeomet",
+				"Cacao/include/cocos2dx/cocoa/CCGeometry.h"
+			],
+			[
+				"CCTouchDis",
+				"Cacao/include/cocos2dx/touch_dispatcher/CCTouchDelegateProtocol.h"
+			],
+			[
+				"CCLayer",
+				"Cacao/include/cocos2dx/layers_scenes_transitions_nodes/CCLayer.h"
+			],
+			[
+				"CCDrawPrimitives",
+				"Cacao/include/cocos2dx/draw_nodes/CCDrawingPrimitives.h"
+			],
+			[
+				"ccArray",
+				"Cacao/include/cocos2dx/support/data_support/ccCArray.h"
 			],
 			[
 				"CCArray",
 				"Cacao/include/cocos2dx/cocoa/CCArray.h"
+			],
+			[
+				"CCMenuItemSprite",
+				"Cacao/include/cocos2dx/custom/Sprites/CCMenuItemSpriteExtra/CCMenuItemSpriteExtra.h"
 			],
 			[
 				"ccobject",
@@ -680,7 +987,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 282.0,
+	"side_bar_width": 306.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

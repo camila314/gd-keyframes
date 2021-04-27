@@ -10,7 +10,7 @@ CXX_FLAGS= -mmacosx-version-min=10.7 -isysroot $(SDK_LOCATION) -std=c++17 -DCC_T
 
 main: dist
 	@echo "Building project..."
-	@$(CXX) $(CXX_INCL) $(CXX_FLAGS) $(CXX_EXTRA) main.cpp ConnectorNode.cpp -o $(OUTPUT)
+	@$(CXX) $(CXX_INCL) $(CXX_FLAGS) $(CXX_EXTRA) main.cpp ConnectorNode.cpp SpacingController.cpp SpacingGui/*.cpp -o $(OUTPUT)
 	@echo "Finished"
 asm:
 	@$(CXX) $(CXX_INCL) $(CXX_FLAGS) $(CXX_EXTRA) main.cpp ConnectorNode.cpp -S
