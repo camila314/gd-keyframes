@@ -11,11 +11,14 @@ class SpacingController : public CCNode {
 	void show();
 	inline int uuid() {return m_uuid;}
 	inline float duration() {return m_duration;}
-	void updateValues(float duration, CCPoint c1, CCPoint c2);
+	void updateValues(float duration, CCPoint c1, CCPoint c2, bool enabled, unsigned divisions);
+	unsigned subdivisions();
 	float bezierMultiplierAtRange(float index, float segments);
  protected:
  	int m_uuid;
  	CCPoint m_bezierControl1;
   	CCPoint m_bezierControl2;
   	float m_duration;
+  	bool m_subdivisionEnabled;
+  	unsigned m_subdivisions;
 };

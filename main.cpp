@@ -11,7 +11,6 @@ ModContainer* m;
 
 typedef struct _pog {
     float rotate;
-    float index;
     CCPoint move;
 } KeyframeInfo;
 
@@ -74,32 +73,16 @@ public:
         }
     }
 
-    std::vector<KeyframeInfo> subdivideIfNeeded(std::vector<KeyframeInfo> frames, SpacingController* sController, int fsize) {
+    std::vector<KeyframeInfo> subdivide(std::vector<KeyframeInfo> frames) {
         std::vector<KeyframeInfo> new_frames;
-        new_frames.push_back(frames[0]);
-        bool is_dirty = false;
-        for (int index=1; index<frames.size();index++) {
-            auto kinfo = frames[index];
-            auto bezMult_1 = sController->bezierMultiplierAtRange(kinfo.index, fsize);
+        for (int index = 0; index<frames.size();index++) {
+            KeyframeInfo kinfo = frames[index];
 
-            float bez2_index = index<(frames.size()-1) ? frames[index+1].index : kinfo.index+1;
-            auto bezMult_2 = sController->bezierMultiplierAtRange(bez2_index, fsize);
-
-            //std::cout << "frame with index " << index << "\n";
-            if (fabs(bezMult_2 - bezMult_1) > 1) {
-                std::cout << "stuff is " << bezMult_2 - bezMult_1 << "\n";
-                std::cout << "index is " << kinfo.index << " - " << bez2_index << "\n"; 
-                KeyframeInfo k1 = {.move = ccp(kinfo.move.x/2, kinfo.move.y/2), .rotate = kinfo.rotate/2, .index = kinfo.index};
-                KeyframeInfo k2 = {.move = ccp(kinfo.move.x/2, kinfo.move.y/2), .rotate = kinfo.rotate/2, .index = (kinfo.index + bez2_index)/2};
-                new_frames.push_back(k1);
-                new_frames.push_back(k2);
-                is_dirty = true;
-            } else {
-                new_frames.push_back(kinfo);
-            }
+            KeyframeInfo k1 = {.move = ccp(kinfo.move.x/2, kinfo.move.y/2), .rotate = kinfo.rotate/2};
+            KeyframeInfo k2 = {.move = ccp(kinfo.move.x/2, kinfo.move.y/2), .rotate = kinfo.rotate/2};
+            new_frames.push_back(k1);
+            new_frames.push_back(k2);
         }
-        if (is_dirty)
-            return subdivideIfNeeded(new_frames, sController, fsize);
         return new_frames;
     }
 
@@ -107,10 +90,9 @@ public:
         std::string toPaste;
 
         std::vector<KeyframeInfo> frames;
-        frames.push_back({.move=ccp(0,0),.rotate=0,.index=0});
+        //frames.push_back({.move=ccp(0,0),.rotate=0,.index=0});
         auto connection = ConnectorNode::findFromSource(src);
         GameObject* original;
-        int index = 1;
         while (connection) {
             auto kframe = connection->getDestinationObject();
             if (!_editorLayer()->_objects()->containsObject(kframe)) {
@@ -128,33 +110,33 @@ public:
             KeyframeInfo info;
             info.move = kframe->getPosition() - metadata->getPosition();
             info.rotate = kframe->getRotation() - metadata->getRotation();
-            info.index = index;
 
             if (info.move.x!=0 || info.move.y!=0 || info.rotate!=0)
                 frames.push_back(info);
             connection->destroy();
             connection = ConnectorNode::findFromSource(kframe);
-            index++;
         }
         auto sController = SpacingController::fromList(g_spacingList, src);
-        std::vector<KeyframeInfo> new_frames = subdivideIfNeeded(frames, sController, frames.size());
+
+        for (int i=0; i<sController->subdivisions(); i++) {
+            frames = subdivide(frames);
+        }
 
         float duration = sController->duration();
-        new_frames.push_back({.move=ccp(0,0),.rotate=0,.index=static_cast<float>(frames.size())});
-        for (int counter=1; counter<new_frames.size()-1;counter++) {
-            auto kinfo = new_frames[counter];
+        //frames.push_back({.move=ccp(0,0),.rotate=0});
+        for (int counter=0; counter<frames.size();counter++) {
+            auto kinfo = frames[counter];
 
             int newGroup = Cacao::uniqueGroupToObject(original, _editorLayer());
 
-            auto bezierSpacing = sController->bezierMultiplierAtRange(kinfo.index, frames.size()) * duration;
+            auto bezierSpacing = sController->bezierMultiplierAtRange(counter, frames.size()) ;//* duration;
+            auto nextBezierSpacing = sController->bezierMultiplierAtRange(counter+1, frames.size()) ;//* duration;
 
-            float bez2_index = new_frames[counter+1].index;
-            auto nextBezierSpacing = sController->bezierMultiplierAtRange(bez2_index, frames.size()) * duration;
+            float currPosition = counter * ( (300.0f * bezierSpacing) / (frames.size() )) * duration;
+            float nextPosition = (counter+1) * ( (300.0f * nextBezierSpacing) / (frames.size() )) * duration;
 
-            float currPosition = (new_frames[counter-1].index) * ( (300.0f * bezierSpacing) / (frames.size() - 1));
-            float nextPosition = (kinfo.index) * ( (300.0f * nextBezierSpacing) / (frames.size() - 1));
-            std::cout << "Bezier with index " << kinfo.index <<": " << bezierSpacing << "\n";
-            std::cout << "Bezier with index " << bez2_index << ": " << nextBezierSpacing << "\n";
+            std::cout << "Bezier of " << bezierSpacing << "   "
+                      << "Next one is " << nextBezierSpacing << "\n";
             if (kinfo.move.x!=0 || kinfo.move.y!=0) {
                 toPaste = toPaste + createMoveTrigger(original->getPosition()+ccp(currPosition, 0), kinfo.move, newGroup, (nextPosition - currPosition) / 300.0f) + ";";
             }
@@ -188,8 +170,10 @@ public:
         }
         if (valid.size()==1) {
             auto ctrl = SpacingController::fromList(g_spacingList, valid[0]);
-            addChild(ctrl);
-            ctrl->show();
+            if (ctrl) {
+                addChild(ctrl);
+                ctrl->show();
+            }
         }
     }
 

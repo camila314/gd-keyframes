@@ -49,8 +49,8 @@ class BezierEditor : public CCNode {
     void evalNewTouch(CCTouch*);
     void cacTouchMoved(CCTouch*, CCEvent*);
     void updateBezier();
-    inline CCPoint normalize(CCPoint c1) {return ccp( (c1.x/(m_background->getContentSize().width/4 - kControlPointRadius*2)) + 0.51285, (c1.y/(m_background->getContentSize().height/4 - kControlPointRadius*2)) + 0.51634 ) + ccp(0.5,0.5);}
-    inline CCPoint unnormalize(CCPoint c1) {return ccp(((c1.x - 0.51285) - 0.5) * (m_background->getContentSize().width/4 - kControlPointRadius*2),((c1.y - 0.51634) - 0.5) * (m_background->getContentSize().height/4 - kControlPointRadius*2));}
+    inline CCPoint normalize(CCPoint c1) {return (c1 + ccp(39.4, 31.1)) / ccp(78.8, 62.2);}
+    inline CCPoint unnormalize(CCPoint c1) {return (c1 * ccp(78.8, 62.2)) - ccp(39.4, 31.1);}
     CAC_CREATE(BezierEditor);
  protected:
     SpacingLayer* m_spacingLayer;
@@ -75,12 +75,29 @@ class DurationTextDelegate : public TextInputDelegate {
 class SpacingLayer : public Cacao::CacAlertLayer {
  public:
     void onDurationChange(CCObject* sender);
+    void onToggle(CCObject* sender);
+    void onLeftArrow(CCObject* sender);
+    void onRightArrow(CCObject* sender);
     void onClose() override;
     bool alertInit() override;
     bool ccTouchBegan(CCTouch* touch, CCEvent* event) override;
     void ccTouchMoved(CCTouch* touch, CCEvent* event) override;
     void setDuration(float duration);
+    void setSubdivide(bool enabled, unsigned divisions);
     void setBezierControls(CCPoint c1, CCPoint c2);
+
+    inline void hideSubdivide() {
+        m_subdivideText->setVisible(false);
+        m_subdivideLabel->setVisible(false);
+        m_subdivideRightArrow->setVisible(false);
+        m_subdivideLeftArrow->setVisible(false);
+    }
+    inline void showSubdivide() {
+        m_subdivideText->setVisible(true);
+        //m_subdivideLabel->setVisible(true);
+        m_subdivideRightArrow->setVisible(true);
+        m_subdivideLeftArrow->setVisible(true);
+    }
     CAC_CREATE(SpacingLayer, CCSize(400, 300));
  protected:
     CAC_PROPERTY(SpacingController*, controller);
@@ -91,4 +108,10 @@ class SpacingLayer : public Cacao::CacAlertLayer {
     int m_currentTouch;
     TouchType m_currentTouchedObject;
     friend class DurationTextDelegate;
+
+    CacTextContainer* m_subdivideText;
+    CCLabelBMFont* m_subdivideLabel;
+    CCMenuItemToggler* m_subdivideToggler;
+    CCMenuItemSpriteExtra* m_subdivideLeftArrow;
+    CCMenuItemSpriteExtra* m_subdivideRightArrow;
 };

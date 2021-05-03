@@ -34,13 +34,17 @@ void SpacingController::show() {
 	auto view = SpacingLayer::create()->controller(this);
 	view->setDuration(m_duration);
 	view->setBezierControls(m_bezierControl1, m_bezierControl2);
+	std::cout << m_subdivisionEnabled << " enabled\n";
+	view->setSubdivide(m_subdivisionEnabled, m_subdivisions);
 	view->show();
 }
 
-void SpacingController::updateValues(float duration, CCPoint c1, CCPoint c2) {
+void SpacingController::updateValues(float duration, CCPoint c1, CCPoint c2, bool enabled, unsigned subdivisions) {
 	m_duration = duration;
 	m_bezierControl1 = c1;
 	m_bezierControl2 = c2;
+	m_subdivisionEnabled = enabled;
+	m_subdivisions = subdivisions;
 }
 
 float SpacingController::bezierMultiplierAtRange(float index, float segments) {
@@ -48,13 +52,15 @@ float SpacingController::bezierMultiplierAtRange(float index, float segments) {
 
 	float x = index / segments;
 	if (x>=1)
-		x = 1;// - (1.0/segments);
+		return 1;
+	if (x==0)
+		return 0;
 
     float t = 0;
     CCPoint currentVertex = ccp(0,0);
-    for(unsigned int i = 1; i <= segments*2; i++) {
+    while (t <= 1) {
     	CCPoint vertex;
-        if (i== segments*2) {
+        if (0) {
             vertex.x = 1;
             vertex.y = 1;
         } else {
@@ -63,12 +69,16 @@ float SpacingController::bezierMultiplierAtRange(float index, float segments) {
             t += 1.0f / (segments*2);
         }
 
-        if (fabs(x - vertex.x) < fabs(x - currentVertex.x))
+        if (fabs(x - vertex.x) < fabs(x - currentVertex.x) || currentVertex.x==0)
         	currentVertex = vertex;
     }
+    return currentVertex.y;
+    //auto ret = 1+(currentVertex.y - x);
+    //return ret!=ret ? 0.0 : ret;
+}
 
-    //Cacao::printGeometry(currentVertex);
-    //auto ret = x/(currentVertex.y > 0.1 ? currentVertex.y : 0.01);
-    auto ret = 1+(x - currentVertex.y);
-    return ret!=ret ? 0.0 : ret;
+unsigned SpacingController::subdivisions() {
+	if (m_subdivisionEnabled)
+		return m_subdivisions;
+	return 0;
 }
