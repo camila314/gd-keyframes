@@ -1,2 +1,8 @@
 # Keyframes (private repo)
-if you see this and you'e not figment, hjfod, or camden314, leave please
+paid hack don't leak please.
+
+Current game plan:
+	Mac: already exists
+	iOS: idk maybe
+	Windows: fig is porting
+	Android: MagneticPrism is porting

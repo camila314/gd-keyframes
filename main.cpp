@@ -1,8 +1,7 @@
-// replace this code
-
-#include <Cacao.hpp>
+// Copyright 2019 camden314
 #include <iostream>
 #include <numeric>
+#include <Cacao.hpp>
 #include "ConnectorNode.h"
 #include "SpacingController.h"
 
@@ -132,11 +131,13 @@ public:
             auto bezierSpacing = sController->bezierMultiplierAtRange(counter, frames.size()) ;//* duration;
             auto nextBezierSpacing = sController->bezierMultiplierAtRange(counter+1, frames.size()) ;//* duration;
 
-            float currPosition = counter * ( (300.0f * bezierSpacing) / (frames.size() )) * duration;
-            float nextPosition = (counter+1) * ( (300.0f * nextBezierSpacing) / (frames.size() )) * duration;
+            float currPosition = ( (300.0f * bezierSpacing) ) * duration;
+            float nextPosition = ( (300.0f * nextBezierSpacing)) * duration;
 
             std::cout << "Bezier of " << bezierSpacing << "   "
                       << "Next one is " << nextBezierSpacing << "\n";
+            std::cout << "Position of " << currPosition << "   "
+                      << "Next one is " << nextPosition << "\n";
             if (kinfo.move.x!=0 || kinfo.move.y!=0) {
                 toPaste = toPaste + createMoveTrigger(original->getPosition()+ccp(currPosition, 0), kinfo.move, newGroup, (nextPosition - currPosition) / 300.0f) + ";";
             }
@@ -179,6 +180,8 @@ public:
 
     static void h_init(PhantomEditorUI* self) {
         ORIG(h_init, 0xcb50)(self);
+        for (auto& i : g_spacingList)
+            i->release();
         g_spacingList.clear();
 
         auto menu = CCMenu::create();
@@ -202,9 +205,6 @@ public:
 
         menu->setPosition(ccp(rgt, top) + ccp(38 * -3, 0));
 
-
-
-
         auto menu2 = CCMenu::create();
         self->addChild(menu2);
 
@@ -223,9 +223,6 @@ public:
 
         menu2->setPosition(ccp(rgt, top) + ccp(38 * -3, -35));
 
-
-
-
         auto menu3 = CCMenu::create();
         self->addChild(menu3);
 
@@ -241,7 +238,6 @@ public:
 
         auto mitem3 = CreateMenuItem::create(mybutton3, mybutton3, self, menu_selector(PhantomEditorUI::onSpacing));
         menu3->addChild(mitem3);
-
         menu3->setPosition(ccp(rgt, top) + ccp(38 * -3, 35 * -2));
     }
 };

@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"bezier",
+				"bezierSpacing"
+			],
+			[
+				"bezierSpacing",
+				"nextBezierSpacing"
+			],
+			[
 				"m_bezier",
 				"m_bezierDrawer"
 			],
@@ -104,19 +112,10 @@
 	"buffers":
 	[
 		{
-			"file": "SpacingGui.h",
+			"file": "/Users/jakrillis/Library/Application Support/Sublime Text 3/Packages/ClangAutoComplete/ClangAutoComplete.sublime-settings",
 			"settings":
 			{
-				"buffer_size": 2478,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Cacao/include/cocos2dx/support/CCPointExtension.h",
-			"settings":
-			{
-				"buffer_size": 8689,
+				"buffer_size": 3095,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -131,21 +130,54 @@
 			}
 		},
 		{
-			"file": "/Users/jakrillis/vta.py",
+			"contents": "_=_=>_<0;-_-_",
 			"settings":
 			{
-				"buffer_size": 318,
-				"encoding": "UTF-8",
+				"buffer_size": 13,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "Embedded software engineer\n\tEducation:  Bachelor's in CS or related field\n\tSkills:\n\t\tCommunication skills\n\t\tOrganization skills\n\t\tC Programming\n\t\tSoftware dev for IoT devices\n\tPreferred Experience:\n\t\t2 years of C\n\t\tlinux experience\n\t\t2 years of IoT experience\n\n\tBest for: people who like boring office jobs and already have experience with IT jobs\n\n\nAutomation programmer:\n\t\n\n\n\n",
+			"file": "/Users/jakrillis/t.cpp",
 			"settings":
 			{
-				"buffer_size": 378,
-				"line_ending": "Unix",
-				"name": "Embedded software engineer"
+				"buffer_size": 605,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "#include \"SpacingController.h\"\n#include \"SpacingGui/SpacingGui.h\"\n\nSpacingController* SpacingController::create(GameObject* ob) {\n    auto pRet = new SpacingController();\n    if (pRet && pRet->init(ob)) {\n        pRet->autorelease();\n        return pRet;\n    }\n    CC_SAFE_DELETE(pRet);\n    return NULL;\n}\n\nSpacingController* SpacingController::fromList(std::vector<SpacingController*>& vec, GameObject* ob) {\n    for (auto& i : vec) {\n        if (i->uuid() == ob->_uuid()) {\n            return i;\n        }\n    }\n    auto ctrl = SpacingController::create(ob);\n    ctrl->retain();\n    vec.push_back(ctrl);\n    return ctrl;\n}\n\nbool SpacingController::init(GameObject* ob) {\n    m_uuid = ob->_uuid();\n    m_bezierControl1 = ccp(0.258355, 0);\n    m_bezierControl2 = ccp(0.741645, 1);\n    m_duration = 0.5;\n    return true;\n}\n\nvoid SpacingController::show() {\n    auto view = SpacingLayer::create()->controller(this);\n    view->setDuration(m_duration);\n    view->setBezierControls(m_bezierControl1, m_bezierControl2);\n    std::cout << m_subdivisionEnabled << \" enabled\\n\";\n    view->setSubdivide(m_subdivisionEnabled, m_subdivisions);\n    view->show();\n}\n\nvoid SpacingController::updateValues(float duration, CCPoint c1, CCPoint c2, bool enabled, unsigned subdivisions) {\n    m_duration = duration;\n    m_bezierControl1 = c1;\n    m_bezierControl2 = c2;\n    m_subdivisionEnabled = enabled;\n    m_subdivisions = subdivisions;\n}\n\nfloat SpacingController::bezierMultiplierAtRange(float index, float segments) {\n\n    float x = index / segments;\n    if (x>=1)\n        return 1;\n    if (x==0)\n        return 0;\n    float t = 0;\n    CCPoint currentVertex = ccp(0,0);\n    while (t <= 1) {\n        CCPoint vertex;\n        if (0) {\n            vertex.x = 1;\n            vertex.y = 1;\n        } else {\n            vertex.x = 3.0f * powf(1 - t, 2) * t * m_bezierControl1.x + 3.0f * (1 - t) * t * t * m_bezierControl2.x + t * t * t;\n            vertex.y = 3.0f * powf(1 - t, 2) * t * m_bezierControl1.y + 3.0f * (1 - t) * t * t * m_bezierControl2.y + t * t * t;\n            t += 1.0f / (segments*2);\n        }\n\n        if (fabs(x - vertex.y) < fabs(x - currentVertex.y) || currentVertex.y==0)\n            currentVertex = vertex;\n    }\n    return currentVertex.x;\n}\n\nunsigned SpacingController::subdivisions() {\n    if (m_subdivisionEnabled)\n        return m_subdivisions;\n    return 0;\n}\n",
+			"file": "SpacingController.cpp",
+			"file_size": 2400,
+			"file_write_time": 132646634194061436,
+			"settings":
+			{
+				"buffer_size": 2370,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main.cpp",
+			"settings":
+			{
+				"buffer_size": 9891,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "0.0265766\n0.027027\n0.026273\n0.0259668\n0.0256577\n0.025346\n0.0250314\n0.027027\n0.0247144\n0.0243944\n0.0240718\n0.0237464\n0.0270271\n0.0234183\n0.0230876\n0.0227541\n0.0224179\n0.0220789\n0.0217372\n0.0213931\n0.0210457\n0.027027\n0.020696\n0.0203434\n0.0199882\n0.0196302\n0.0192695\n0.0189061\n0.0185399\n0.0181711\n0.0177996\n0.00744641\n0.0166684\n0.016286\n0.0159009\n0.0019995",
+			"settings":
+			{
+				"buffer_size": 353,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Describe one positive and one negative impact that you have personally experienced due to new technologies.\n\nPositive: I made upwards to $40 by using new technologies to release a computer program.\n\nNegative: New technologies have sometimes made focus more difficult for certain tasks",
+			"settings":
+			{
+				"buffer_size": 284,
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -185,12 +217,12 @@
 		"selected_items":
 		[
 			[
-				"c++",
-				"Set Syntax: C++"
-			],
-			[
 				"x86",
 				"Set Syntax: Assembly x86 (NASM)"
+			],
+			[
+				"c++",
+				"Set Syntax: C++"
 			],
 			[
 				"lint",
@@ -413,10 +445,25 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/jakrillis/projects/gdmods/phantom"
+		"/Users/jakrillis/projects/phantom",
+		"/Users/jakrillis/projects/phantom/Cacao",
+		"/Users/jakrillis/projects/phantom/Cacao/include"
 	],
 	"file_history":
 	[
+		"/Users/jakrillis/projects/phantom/SpacingController.cpp",
+		"/Users/jakrillis/projects/phantom/main.cpp",
+		"/Users/jakrillis/look idk.html",
+		"/Users/jakrillis/projects/gdmods/osxbot/combine.m",
+		"/Users/jakrillis/projects/gdmods/gdstdlib/research.txt",
+		"/Users/jakrillis/projects/Lvl2SPWN/gmanager.py",
+		"/Users/jakrillis/projects/phantom/README.md",
+		"/Users/jakrillis/projects/phantom/LICENSE",
+		"/Users/jakrillis/projects/phantom/.gitignore",
+		"/Users/jakrillis/vta.py",
+		"/Users/jakrillis/projects/phantom/Cacao/include/Cacao.hpp",
+		"/Users/jakrillis/projects/phantom/Cacao/include/cocos2dx/support/CCPointExtension.h",
+		"/Users/jakrillis/projects/phantom/SpacingGui.h",
 		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/touch_dispatcher/CCTouch.h",
 		"/Users/jakrillis/projects/gdmods/phantom/Makefile",
 		"/Users/jakrillis/projects/gdmods/phantom/main.cpp",
@@ -446,7 +493,6 @@
 		"/Users/jakrillis/t.c",
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-23-123447_camden314.crash",
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-23-124210_camden314.crash",
-		"/Users/jakrillis/projects/gdmods/gdstdlib/research.txt",
 		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/cocoa/CCArray.h",
 		"/Users/jakrillis/projects/gdmods/phantom/Cacao/include/cocos2dx/support/data_support/ccCArray.h",
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-23-132041_camden314.crash",
@@ -532,19 +578,7 @@
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-07-212217_camden314.crash",
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-07-211251_camden314.crash",
 		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-07-210401_camden314.crash",
-		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-07-210722_camden314.crash",
-		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-07-211018_camden314.crash",
-		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-07-211141_camden314.crash",
-		"/Users/jakrillis/projects/multithread/override_orig",
-		"/Users/jakrillis/projects/multithread/cacao/include/cacao.cpp",
-		"/Users/jakrillis/projects/multithread/makefil",
-		"/Users/jakrillis/projects/multithread/t.cpp",
-		"/Users/jakrillis/gddec/finished works/createObjectsFromSetup.cpp",
-		"/Users/jakrillis/projects/multithread/bet.cpp",
-		"/Users/jakrillis/projects/gdml/makefile",
-		"/Users/jakrillis/projects/multithread/Makefile",
-		"/Users/jakrillis/projects/opt/opt.cpp",
-		"/Users/jakrillis/projects/opt/makefile"
+		"/Users/jakrillis/Library/Logs/DiagnosticReports/Geometry Dash_2021-04-07-210722_camden314.crash"
 	],
 	"find":
 	{
@@ -562,6 +596,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			" ",
+			"Bezier difference of ",
 			"updateDraw",
 			"textChanged",
 			"clamp_to_bezier_space",
@@ -623,6 +659,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"",
 			"kControlPointDiameter",
 			"",
 			";\\n",
@@ -639,71 +676,41 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "SpacingGui.h",
+					"file": "/Users/jakrillis/Library/Application Support/Sublime Text 3/Packages/ClangAutoComplete/ClangAutoComplete.sublime-settings",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2478,
+						"buffer_size": 3095,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1691,
-								1691
+								2018,
+								2018
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"auto_complete": true,
+							"syntax": "Packages/PackageDev/Package/Sublime Text Settings/Sublime Text Settings.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 636.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Cacao/include/cocos2dx/support/CCPointExtension.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8689,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4955,
-								4955
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3338.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "Cacao/include/Cacao.hpp",
 					"semi_transient": false,
 					"settings":
@@ -715,8 +722,8 @@
 						"selection":
 						[
 							[
-								2902,
-								2915
+								486,
+								486
 							]
 						],
 						"settings":
@@ -726,34 +733,6 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 771.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/Users/jakrillis/vta.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 318,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								318,
-								318
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
@@ -761,39 +740,176 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 2,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 378,
+						"buffer_size": 13,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								207,
-								207
-							],
-							[
-								222,
-								222
+								0,
+								13
 							]
 						],
 						"settings":
 						{
-							"auto_name": "Embedded software engineer",
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Users/jakrillis/t.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 605,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								98,
+								98
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "SpacingController.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2370,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1502,
+								1502
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 629.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 5,
+					"file": "main.cpp",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 9891,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2125,
+								2125
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 529.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 353,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								353
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 284,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								284,
+								109
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
 					"semi_transient": false,
 					"settings":
 					{
@@ -816,7 +932,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 8,
 					"type": "text"
 				}
 			]
@@ -857,13 +973,17 @@
 	{
 		"height": 0.0
 	},
+	"output.clangautocomplete":
+	{
+		"height": 88.0
+	},
 	"output.diagnostics":
 	{
 		"height": 0.0
 	},
 	"output.exec":
 	{
-		"height": 247.0
+		"height": 208.0
 	},
 	"output.find_results":
 	{
