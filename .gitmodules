@@ -1,0 +1,9 @@
+[submodule "sub/MinHook"]
+	path = sub/MinHook
+	url = https://github.com/TsudaKageyu/MinHook
+[submodule "sub/gd"]
+	path = sub/gd
+	url = https://github.com/HJfod/gd.h
+[submodule "sub/cocos"]
+	path = sub/cocos
+	url = https://github.com/HJfod/cocos-headers
