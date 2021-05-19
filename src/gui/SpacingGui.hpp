@@ -25,43 +25,46 @@ class DurationTextDelegate;
 class BezierCanvas;
 
 class BezierCanvas : public cocos2d::CCDrawNode {
- public:
-    void _cubicBezierStuff(
-        const cocos2d::CCPoint& origin,
-        const cocos2d::CCPoint& control1,
-        const cocos2d::CCPoint& control2,
-        const cocos2d::CCPoint& destination,
-        unsigned int segments,
-        cocos2d::ccColor4F color
-    );
+    public:
+        void _cubicBezierStuff(
+            const cocos2d::CCPoint& origin,
+            const cocos2d::CCPoint& control1,
+            const cocos2d::CCPoint& control2,
+            const cocos2d::CCPoint& destination,
+            unsigned int segments,
+            cocos2d::ccColor4F color
+        );
 };
 
 class ControlPoint : public cocos2d::CCDrawNode {
- public:
-    static ControlPoint* create(BezierEditor* sl, int ctrl_point);
-    void clampControl();
-    inline BezierEditor* parent() {return reinterpret_cast<BezierEditor*>(getUserObject());}
-    inline bool intersectsControl(cocos2d::CCPoint p) {
-        return p.getDistance(getPosition()) <= kControlPointRadius;
-    }
-    void updateDraw(CCObject* sender);
+    public:
+        static ControlPoint* create(BezierEditor* sl, int ctrl_point);
+        void clampControl();
+        inline BezierEditor* parent() {return reinterpret_cast<BezierEditor*>(getUserObject());}
+        inline bool intersectsControl(cocos2d::CCPoint p) {
+            return p.getDistance(getPosition()) <= kControlPointRadius;
+        }
+        void updateDraw(CCObject* sender);
 };
 
 class BezierEditor : public cocos2d::CCNode {
- public:
-    bool init() override;
-    cocos2d::CCPoint getTouchPos(cocos2d::CCPoint p);
-    bool intersectsEditor(cocos2d::CCPoint p);
-    void evalNewTouch(cocos2d::CCTouch*);
-    void cacTouchMoved(cocos2d::CCTouch*, cocos2d::CCEvent*);
-    void updateBezier();
-    inline cocos2d::CCPoint normalize(cocos2d::CCPoint c1) {
-        return (c1 + ccp(39.4, 31.1)) / ccp(78.8, 62.2);
-    }
-    inline cocos2d::CCPoint unnormalize(cocos2d::CCPoint c1) {
-        return (c1 * ccp(78.8, 62.2)) - ccp(39.4, 31.1);
-    }
-    MK_CLASS_CREATE(BezierEditor);
+    public:
+        bool init() override;
+
+        cocos2d::CCPoint getTouchPos(cocos2d::CCPoint p);
+        bool intersectsEditor(cocos2d::CCPoint p);
+        void evalNewTouch(cocos2d::CCTouch*);
+        void cacTouchMoved(cocos2d::CCTouch*, cocos2d::CCEvent*);
+        void updateBezier();
+
+        inline cocos2d::CCPoint normalize(cocos2d::CCPoint c1) {
+            return (c1 + ccp(39.4, 31.1)) / ccp(78.8, 62.2);
+        }
+        inline cocos2d::CCPoint unnormalize(cocos2d::CCPoint c1) {
+            return (c1 * ccp(78.8, 62.2)) - ccp(39.4, 31.1);
+        }
+
+        MK_CLASS_CREATE(BezierEditor);
 
  protected:
     SpacingLayer* m_spacingLayer;
@@ -76,11 +79,12 @@ class BezierEditor : public cocos2d::CCNode {
 };
 
 class DurationTextDelegate : public gd::TextInputDelegate {
- public:
-    DurationTextDelegate(SpacingLayer* sl) {m_spacingLayer = sl;}
-    void textChanged() override;
- protected:
-    SpacingLayer* m_spacingLayer;
+    protected:
+        SpacingLayer* m_spacingLayer;
+
+    public:
+        DurationTextDelegate(SpacingLayer* sl) {m_spacingLayer = sl;}
+        void textChanged(gd::CCTextInputNode*) override;
 };
 
 class SpacingLayer : public BrownAlertDelegate {
