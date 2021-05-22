@@ -2,14 +2,19 @@
 
 #include "../offsets.hpp"
 
-class InputNode : public cocos2d::CCNode {
+class InputNode : public cocos2d::CCNode, gd::TextInputDelegate {
     protected:
+        using inp_func = std::function<void(const char*)>;
+
         cocos2d::extension::CCScale9Sprite* m_pBG;
         gd::CCTextInputNode* m_pInput;
+        inp_func m_pTypeCallback;
 
         bool init(float, float, const char*, const char*, const std::string &, int);
         bool init(float, const char*, const char*, const std::string &, int);
         bool initMulti(float, float, const char*, const char*, const std::string &, int);
+
+        virtual void textChanged(gd::CCTextInputNode*) override;
 
     public:
         static InputNode* create(
@@ -45,6 +50,8 @@ class InputNode : public cocos2d::CCNode {
         // the same as normal
         static InputNode* createMulti(float, float, const char*, const char*, const std::string &, int);
         static InputNode* createMulti(float, float, const char*, const char*, int);
+
+        inline void setInputCallback(inp_func f) { this->m_pTypeCallback = f; }
 
         gd::CCTextInputNode* getInputNode();
 

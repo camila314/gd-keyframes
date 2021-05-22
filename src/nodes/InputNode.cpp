@@ -14,6 +14,11 @@ gd::CCTextInputNode* InputNode::getInputNode() {
     return this->m_pInput;
 }
 
+void InputNode::textChanged(gd::CCTextInputNode* node) {
+    if (this->m_pTypeCallback)
+        this->m_pTypeCallback(node->getString());
+}
+
 bool InputNode::init(float _w, float _h, const char* _phtxt, const char* _fnt, const std::string & _awc, int _cc) {
     this->m_pBG = cocos2d::extension::CCScale9Sprite::create(
         "square02b_001.png", { 0.0f, 0.0f, 80.0f, 80.0f }
@@ -34,6 +39,7 @@ bool InputNode::init(float _w, float _h, const char* _phtxt, const char* _fnt, c
     this->m_pInput->setLabelPlaceholerScale(.75f);
     this->m_pInput->setMaxLabelScale(.8f);
     this->m_pInput->setMaxLabelLength(_cc);
+    this->m_pInput->setDelegate(this);
     if (_awc.length())
         this->m_pInput->setAllowedChars(_awc);
 

@@ -29,6 +29,11 @@ template<typename T, typename U> constexpr size_t offsetOf(U T::*member) {
     return (char*)&((T*)nullptr->*member) - (char*)nullptr;
 }
 
+template<typename T>
+constexpr const T& clamp( const T& v, const T& lo, const T& hi) {
+    return v < lo ? lo : hi < v ? hi : v;
+}
+
 inline bool patchBytes(
     uintptr_t const address,
     std::vector<uint8_t> const& bytes
@@ -40,6 +45,25 @@ inline bool patchBytes(
         bytes.size(),
         nullptr
     );
+}
+
+namespace Cacao {
+    inline cocos2d::CCPoint addedPosition(double x, double y) {
+        auto winSize = cocos2d::CCDirector::sharedDirector()->getWinSize();
+        float xp = winSize.width / 2 + (float)x;
+        float yp = winSize.height / 2 + (float)y;
+        cocos2d::CCPoint ccp;
+        ccp.x = xp;
+        ccp.y = yp;
+        return ccp;
+    }
+
+    int uniqueGroupToObjects(cocos2d::CCArray*, gd::LevelEditorLayer*);
+    inline int uniqueGroupToObject(gd::GameObject* obj, gd::LevelEditorLayer* lel) {
+        auto arr = cocos2d::CCArray::create();
+        arr->addObject(obj);
+        return uniqueGroupToObjects(arr, lel);
+    }
 }
 
 // thanks pie

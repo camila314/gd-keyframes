@@ -16,10 +16,12 @@ int ConnectorNode::getIndex() {
     }
     return counter;
 }
+
 void ConnectorNode::destroy() {
     ConnectorNode::connectorPool->removeObject(this);
     this->removeFromParentAndCleanup(true);
 }
+
 void ConnectorNode::updateDraw(CCObject* sender) {
     this->clear();
     if (!LEL->getAllObjects()->containsObject(getSourceObject())) {
@@ -50,6 +52,7 @@ void ConnectorNode::updateDraw(CCObject* sender) {
             ccc4FFromccc3B(ccc3(255, 16, 16)));
     }
 }
+
 ConnectorNode* ConnectorNode::create(GameObject* dest, GameObject* src) {
     auto pret = reinterpret_cast<ConnectorNode*>(CCDrawNode::create());
     auto storage = CCArray::create();
@@ -77,6 +80,7 @@ GameObject* ConnectorNode::getDestinationObject() {
         reinterpret_cast<CCArray*>(getUserObject())
         ->objectAtIndex(0));
 }
+
 GameObject* ConnectorNode::getSourceObject() {
     return reinterpret_cast<GameObject*>(
         reinterpret_cast<CCArray*>(getUserObject())
@@ -92,17 +96,20 @@ CCLabelBMFont* ConnectorNode::getIndexLabel() {
 ConnectorNode* ConnectorNode::findFromSource(GameObject* src) {
     if (!ConnectorNode::connectorPool)
         return nullptr;
-    for (int i=0; i<ConnectorNode::connectorPool->count(); i++) {
+
+    for (int i=0; i < ConnectorNode::connectorPool->count(); i++) {
         auto cn = reinterpret_cast<ConnectorNode*>(ConnectorNode::connectorPool->objectAtIndex(i));
         if (cn->getSourceObject() == src)
             return cn;
     }
+
     return nullptr;
 }
 
 bool ConnectorNode::getDotEnabled() {
     return reinterpret_cast<uintptr_t>(this->getUserData())>0;
 }
+
 void ConnectorNode::setDotEnabled(bool set) {
     this->setUserData(reinterpret_cast<void*>(set ? 0x2 : 0x0));
 }

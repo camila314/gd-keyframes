@@ -1,7 +1,11 @@
 #include "mod.hpp"
+#include "hooks/EditorUI.hpp"
 
 bool mod::load() {
     if (MH_Initialize() != MH_OK) [[unlikely]]
+        return false;
+
+    if (!EditorUI_hook::loadHook())
         return false;
 
     if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK) [[unlikely]] {

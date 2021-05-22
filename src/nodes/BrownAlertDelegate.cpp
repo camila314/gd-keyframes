@@ -44,6 +44,9 @@ bool BrownAlertDelegate::init(float _w, float _h, const char* _spr, const char* 
 
     closeBtn->setPosition( - _w / 2, _h / 2 );
 
+    registerWithTouchDispatcher();
+    cocos2d::CCDirector::sharedDirector()->getTouchDispatcher()->incrementForcePrio(2);
+
     this->setKeypadEnabled(true);
     this->setTouchEnabled(true);
 

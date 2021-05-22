@@ -21,8 +21,13 @@ DWORD WINAPI load_thread(LPVOID hModule) {
             #ifdef GDCONSOLE
             gd::console::awaitUnload();
             #endif
-        } else
+        } else {
+            #ifdef GDCONSOLE
+            gd::console::unload();
+            #endif
+            MessageBoxA(nullptr, "Unable to set up hooks!", "KeyframeEditor", MB_ICONERROR);
             FreeLibraryAndExitThread((HMODULE)hModule, 0);
+        }
     } else
         FreeLibraryAndExitThread((HMODULE)hModule, 0);
 

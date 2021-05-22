@@ -1,5 +1,5 @@
 #include "SpacingController.hpp"
-#include "../gui/SpacingGui.hpp"
+#include "../gui/SpacingLayer.hpp"
 
 using namespace cocos2d;
 using namespace gd;
@@ -16,7 +16,7 @@ SpacingController* SpacingController::create(GameObject* ob) {
 
 SpacingController* SpacingController::fromList(std::vector<SpacingController*>& vec, GameObject* ob) {
     for (auto& i : vec) {
-        if (i->uuid() == ob->_uuid()) {
+        if (i->uuid() == ob->getUniqueID()) {
             return i;
         }
     }
@@ -27,7 +27,7 @@ SpacingController* SpacingController::fromList(std::vector<SpacingController*>& 
 }
 
 bool SpacingController::init(GameObject* ob) {
-    m_uuid = ob->_uuid();
+    m_uuid = ob->getUniqueID();
     m_bezierControl1 = ccp(0.258355, 0);
     m_bezierControl2 = ccp(0.741645, 1);
     m_duration = 0.5;
@@ -38,7 +38,6 @@ void SpacingController::show() {
     auto view = SpacingLayer::create()->controller(this);
     view->setDuration(m_duration);
     view->setBezierControls(m_bezierControl1, m_bezierControl2);
-    // std::cout << m_subdivisionEnabled << " enabled\n";
     view->setSubdivide(m_subdivisionEnabled, m_subdivisions);
     view->show();
 }
@@ -52,8 +51,6 @@ void SpacingController::updateValues(float duration, CCPoint c1, CCPoint c2, boo
 }
 
 float SpacingController::bezierMultiplierAtRange(float index, float segments) {
-    //std::cout << x << "\n";
-
     float x = index / segments;
     if (x>=1)
         return 1;
