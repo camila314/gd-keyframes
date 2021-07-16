@@ -1,11 +1,5 @@
-# Keyframes (private repo)
-paid hack don't leak please.
+# Keyframes
 
-Current game plan:
-	Mac: already exists
+free hack now
 
-	iOS: idk maybe
-
-	Windows: fig is porting
-
-	Android: MagneticPrism is porting
+download mac version in the releases
